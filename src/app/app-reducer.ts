@@ -3,13 +3,15 @@ import { authActions } from 'features/Login/auth-reducer'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppThunk } from 'app/store'
 
+const initialState = {
+    status: 'idle' as RequestStatusType,
+    error: null as string | null,
+    isInitialized: false,
+}
+
 const slice = createSlice({
     name: 'app',
-    initialState: {
-        status: 'idle' as RequestStatusType,
-        error: null as string | null,
-        isInitialized: false,
-    },
+    initialState,
     reducers: {
         setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
             state.error = action.payload.error
@@ -36,12 +38,7 @@ export const initializeAppTC = (): AppThunk => (dispatch) => {
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-const initialState = {
-    status: 'idle' as RequestStatusType,
-    error: null as string | null,
-    isInitialized: false,
-}
-export type InitialStateType = typeof initialState
+export type AppInitialStateType = typeof initialState
 
 export const appReducer = slice.reducer
 export const appActions = slice.actions
