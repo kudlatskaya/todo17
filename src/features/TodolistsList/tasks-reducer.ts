@@ -53,7 +53,7 @@ const slice = createSlice({
             delete _state[action.payload.todolistId]
             return _state
         },
-        setTodolist: (state, action: PayloadAction<{ todolists: Array<TodolistType> }>) => {
+        setTodolists: (state, action: PayloadAction<{ todolists: Array<TodolistType> }>) => {
             const _state = { ...state }
             action.payload.todolists.forEach((tl) => {
                 _state[tl.id] = []
