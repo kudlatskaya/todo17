@@ -69,7 +69,7 @@ test('todolists should be added', () => {
 test('correct entity status of todolist should be changed', () => {
     let newStatus: RequestStatusType = 'loading'
 
-    const action = todolistsActions.changeTodolistEntityStatus({ id: todolistId2, status: newStatus })
+    const action = todolistsActions.changeTodolistEntityStatus({ id: todolistId2, entityStatus: newStatus })
 
     const endState = todolistsReducer(startState, action)
 
