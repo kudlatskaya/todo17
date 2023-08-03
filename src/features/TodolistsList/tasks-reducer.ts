@@ -18,7 +18,7 @@ const slice = createSlice({
     initialState,
     reducers: {
         removeTask: (state, action: PayloadAction<{ taskId: string; todolistId: string }>) => {
-            state = {
+            return {
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].filter(
                     (t) => t.id != action.payload.taskId,
@@ -26,7 +26,7 @@ const slice = createSlice({
             }
         },
         addTask: (state, action: PayloadAction<{ task: TaskType }>) => {
-            state = {
+            return {
                 ...state,
                 [action.payload.task.todoListId]: [action.payload.task, ...state[action.payload.task.todoListId]],
             }
@@ -35,7 +35,7 @@ const slice = createSlice({
             state,
             action: PayloadAction<{ taskId: string; model: UpdateDomainTaskModelType; todolistId: string }>,
         ) => {
-            state = {
+            return {
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
                     t.id === action.payload.taskId ? { ...t, ...action.payload.model } : t,
@@ -43,10 +43,10 @@ const slice = createSlice({
             }
         },
         setTasks: (state, action: PayloadAction<{ tasks: Array<TaskType>; todolistId: string }>) => {
-            state = { ...state, [action.payload.todolistId]: action.payload.tasks }
+            return { ...state, [action.payload.todolistId]: action.payload.tasks }
         },
         addTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
-            state = { ...state, [action.payload.todolist.id]: [] }
+            return { ...state, [action.payload.todolist.id]: [] }
         },
         removeTodolist: (state, action: PayloadAction<{ todolistId: string }>) => {
             const _state = { ...state }

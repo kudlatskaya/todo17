@@ -11,24 +11,28 @@ const slice = createSlice({
     initialState,
     reducers: {
         removeTodolist: (state, action: PayloadAction<{ id: string }>) => {
-            state = state.filter((tl) => tl.id != action.payload.id)
+            const index = state.findIndex((todo) => todo.id === action.payload.id)
+            if (index !== -1) state.splice(index, 1)
         },
         addTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
-            state = [{ ...action.payload.todolist, filter: 'all', entityStatus: 'idle' }, ...state]
+            // return [{ ...action.payload.todolist, filter: 'all', entityStatus: 'idle' }, ...state]
+            state.unshift({ ...action.payload.todolist, filter: 'all', entityStatus: 'idle' })
         },
         changeTodolistTitle: (state, action: PayloadAction<{ id: string; title: string }>) => {
-            state = state.map((tl) => (tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl))
+            // return state.map((tl) => (tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl))
+            state.forEach((tl) => (tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl))
         },
         changeTodolistFilter: (state, action: PayloadAction<{ id: string; filter: FilterValuesType }>) => {
-            state = state.map((tl) => (tl.id === action.payload.id ? { ...tl, filter: action.payload.filter } : tl))
+            return state.map((tl) => (tl.id === action.payload.id ? { ...tl, filter: action.payload.filter } : tl))
         },
         changeTodolistEntityStatus: (state, action: PayloadAction<{ id: string; status: RequestStatusType }>) => {
-            state = state.map((tl) =>
+            return state.map((tl) =>
                 tl.id === action.payload.id ? { ...tl, entityStatus: action.payload.status } : tl,
             )
         },
         setTodolists: (state, action: PayloadAction<{ todolists: Array<TodolistType> }>) => {
-            state = action.payload.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }))
+            // debugger
+            return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }))
         },
     },
 })
