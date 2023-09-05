@@ -34,6 +34,9 @@ const slice = createSlice({
             return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }))
             // action.payload.todolists.forEach((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }))
         },
+        clearData: (state, action) => {
+            return []
+        },
     },
 })
 
