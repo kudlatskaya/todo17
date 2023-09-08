@@ -3,7 +3,7 @@ import { appActions, RequestStatusType } from 'app/app-reducer'
 import { handleServerNetworkError } from 'utils/error-utils'
 import { AppThunk } from 'app/store'
 import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
-import { fetchTasksTC } from 'features/TodolistsList/tasks-reducer'
+import { fetchTasksTC, tasksActions } from 'features/TodolistsList/tasks-reducer'
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -34,9 +34,14 @@ const slice = createSlice({
             return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }))
             // action.payload.todolists.forEach((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }))
         },
-        clearData: (state, action) => {
+        // clearData: () => {
+        //     return []
+        // },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(tasksActions.clearData, () => {
             return []
-        },
+        })
     },
 })
 
