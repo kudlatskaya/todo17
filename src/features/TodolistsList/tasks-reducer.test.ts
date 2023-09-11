@@ -1,4 +1,4 @@
-import { tasksActions, tasksReducer, TasksStateType } from './tasks-reducer'
+import { tasksActions, tasksReducer, TasksStateType, tasksThunks } from './tasks-reducer'
 import { TaskPriorities, TaskStatuses } from 'api/todolists-api'
 
 let startState: TasksStateType = {}
@@ -187,7 +187,14 @@ test('title of specified task should be changed', () => {
 //     expect(endState['2']).toBeDefined()
 // })
 test('tasks should be added for todolist', () => {
-    const action = tasksActions.setTasks({ tasks: startState['todolistId1'], todolistId: 'todolistId1' })
+    const action = tasksThunks.fetchTasks.fulfilled(
+        {
+            tasks: startState['todolistId1'],
+            todolistId: 'todolistId1',
+        },
+        '',
+        'todolistId1',
+    )
 
     const endState = tasksReducer(
         {
