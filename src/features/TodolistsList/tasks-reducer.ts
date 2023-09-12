@@ -1,4 +1,11 @@
-import { TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType } from 'api/todolists-api'
+import {
+    AddTaskArg,
+    TaskPriorities,
+    TaskStatuses,
+    TaskType,
+    todolistsAPI,
+    UpdateTaskModelType,
+} from 'api/todolists-api'
 import { AppDispatch, AppRootStateType, AppThunk } from 'app/store'
 import { appActions } from 'app/app-reducer'
 import { handleServerAppError, handleServerNetworkError } from 'utils/error-utils'
@@ -78,29 +85,26 @@ export const removeTaskTC =
         })
     }
 
-const addTask = createAppAsyncThunk<{ task: TaskType }, { title: string; todolistId: string }>(
-    'tasks/addTask',
-    async (arg, thunkAPI) => {
-        const { dispatch, rejectWithValue } = thunkAPI
+const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArg>('tasks/addTask', async (arg, thunkAPI) => {
+    const { dispatch, rejectWithValue } = thunkAPI
 
-        try {
-            dispatch(appActions.setAppStatus({ status: 'loading' }))
-            const res = await todolistsAPI.createTask(arg.todolistId, arg.title)
-            const task = res.data.data.item
+    try {
+        dispatch(appActions.setAppStatus({ status: 'loading' }))
+        const res = await todolistsAPI.createTask(arg)
+        const task = res.data.data.item
 
-            if (res.data.resultCode === 0) {
-                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-                return { task }
-            } else {
-                handleServerAppError(res.data, dispatch)
-                return rejectWithValue(null)
-            }
-        } catch (e: any) {
-            handleServerNetworkError(e, dispatch)
+        if (res.data.resultCode === 0) {
+            dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+            return { task }
+        } else {
+            handleServerAppError(res.data, dispatch)
             return rejectWithValue(null)
         }
-    },
-)
+    } catch (e: any) {
+        handleServerNetworkError(e, dispatch)
+        return rejectWithValue(null)
+    }
+})
 
 // export const _addTaskTC =
 //     (title: string, todolistId: string): AppThunk =>
