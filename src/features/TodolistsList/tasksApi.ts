@@ -1,7 +1,6 @@
 import { BaseResponse } from 'common/types'
 import { instance } from 'common/api/api'
-import { UpdateDomainTaskModelType } from 'features/TodolistsList/tasks-reducer'
-import { TaskPriorities, TaskStatuses } from 'common/enums'
+import { AddTaskArg, GetTasksResponse, TaskType, UpdateTaskModelType } from 'features/TodolistsList/taskApiTypes'
 
 export const tasksAPI = {
     getTasks(todolistId: string) {
@@ -18,41 +17,4 @@ export const tasksAPI = {
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<BaseResponse<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
-}
-
-export type AddTaskArg = {
-    title: string
-    todolistId: string
-}
-
-export type UpdateTaskArg = {
-    todolistId: string
-    taskId: string
-    domainModel: UpdateDomainTaskModelType
-}
-
-export type TaskType = {
-    description: string
-    title: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-export type UpdateTaskModelType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-}
-type GetTasksResponse = {
-    error: string | null
-    totalCount: number
-    items: TaskType[]
 }

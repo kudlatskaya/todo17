@@ -4,8 +4,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { todolistsActions } from 'features/TodolistsList/todolists-reducer'
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from 'common/utils'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
-import { AddTaskArg, tasksAPI, TaskType, UpdateTaskArg, UpdateTaskModelType } from 'features/TodolistsList/tasksApi'
-import { todolistsAPI } from 'features/TodolistsList/todolistsApi'
+import { tasksAPI } from 'features/TodolistsList/tasksApi'
+import { AddTaskArg, TaskType, UpdateTaskArg, UpdateTaskModelType } from 'features/TodolistsList/taskApiTypes'
 
 const initialState: TasksStateType = {}
 
