@@ -9,10 +9,9 @@ import {
 } from 'api/todolists-api'
 import { AppThunk } from 'app/store'
 import { appActions } from 'app/app-reducer'
-import { handleServerAppError, handleServerNetworkError } from 'utils/error-utils'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { todolistsActions } from 'features/TodolistsList/todolists-reducer'
-import { createAppAsyncThunk } from 'utils/createAsyncThunk'
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from 'utils'
 
 const initialState: TasksStateType = {}
 
@@ -83,6 +82,12 @@ export const removeTaskTC =
         })
     }
 
+export enum ResultCode {
+    success = 0,
+    error = 1,
+    captcha = 10,
+}
+
 const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArg>('tasks/addTask', async (arg, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI
 
@@ -91,7 +96,7 @@ const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArg>('tasks/addTa
         const res = await todolistsAPI.createTask(arg)
         const task = res.data.data.item
 
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === ResultCode.success) {
             dispatch(appActions.setAppStatus({ status: 'succeeded' }))
             return { task }
         } else {
