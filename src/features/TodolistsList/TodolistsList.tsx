@@ -11,13 +11,13 @@ import {
     todolistsActions,
 } from './todolists-reducer'
 import { removeTaskTC, TasksStateType, tasksThunks } from './tasks-reducer'
-import { TaskStatuses } from 'api/todolists-api'
 import { Grid, Paper } from '@mui/material'
-import { AddItemForm } from 'components/AddItemForm/AddItemForm'
+import { AddItemForm } from 'common/components/AddItemForm/AddItemForm'
 import { Todolist } from './Todolist/Todolist'
 import { Navigate } from 'react-router-dom'
-import { useAppDispatch } from 'hooks/useAppDispatch'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { isLoggedInSelector, tasksSelector, todolistsSelector } from 'features/TodolistsList/todolistslist-selector'
+import { TaskStatuses } from 'common/enums'
 
 type PropsType = {
     demo?: boolean
