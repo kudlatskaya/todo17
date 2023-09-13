@@ -1,6 +1,11 @@
 import { UpdateDomainTaskModelType } from 'features/TodolistsList/tasks-reducer'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
 
+export type DeleteTaskArg = {
+    taskId: string
+    todolistId: string
+}
+
 export type AddTaskArg = {
     title: string
     todolistId: string
