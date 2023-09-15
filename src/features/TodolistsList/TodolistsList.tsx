@@ -2,10 +2,8 @@ import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { AppRootStateType } from 'app/store'
 import {
-    addTodolistTC,
     changeTodolistTitleTC,
     FilterValuesType,
-    removeTodolistTC,
     TodolistDomainType,
     todolistsActions,
     todolistsThunks,
@@ -59,8 +57,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     }, [])
 
     const removeTodolist = useCallback(function (id: string) {
-        const thunk = removeTodolistTC(id)
-        dispatch(thunk)
+        dispatch(todolistsThunks.removeTodolist(id))
     }, [])
 
     const changeTodolistTitle = useCallback(function (id: string, title: string) {
@@ -70,8 +67,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
 
     const addTodolist = useCallback(
         (title: string) => {
-            const thunk = addTodolistTC(title)
-            dispatch(thunk)
+            dispatch(todolistsThunks.addTodolist({ title }))
         },
         [dispatch],
     )
