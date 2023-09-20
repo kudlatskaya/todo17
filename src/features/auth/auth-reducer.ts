@@ -28,6 +28,29 @@ const slice = createSlice({
 
 // thunks
 
+const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
+    'auth/initializeApp',
+    async (arg, thunkAPI) => {
+        const { dispatch, rejectWithValue } = thunkAPI
+
+        try {
+            const res = await authAPI.me()
+
+            if (res.data.resultCode === ResultCode.success) {
+                return { isLoggedIn: true }
+            } else {
+                handleServerAppError(res.data, dispatch)
+                return rejectWithValue(null)
+            }
+
+            dispatch(appActions.setAppInitialized({ isInitialized: true }))
+        } catch (e: any) {
+            handleServerNetworkError(e, dispatch)
+            return rejectWithValue(null)
+        }
+    },
+)
+
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>('auth/login', async (arg, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI
 
@@ -75,4 +98,4 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>('auth/log
 
 export const authReducer = slice.reducer
 export const authActions = slice.actions
-export const authThunks = { login, logout }
+export const authThunks = { login, logout, initializeApp }
