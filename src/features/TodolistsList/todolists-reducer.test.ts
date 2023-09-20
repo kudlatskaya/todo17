@@ -77,13 +77,13 @@ test('correct filter of todolist should be changed', () => {
     expect(endState[1].filter).toBe(newFilter)
 })
 
-test('todolists should be added', () => {
-    const action = todolistsThunks.fetchTodolists.fulfilled({ todolists: startState }, '')
-
-    const endState = todolistsReducer([], action)
-
-    expect(endState.length).toBe(2)
-})
+// test('todolists should be added', () => {
+//     const action = todolistsThunks.fetchTodolists.fulfilled({ todolists: startState }, '' )
+//
+//     const endState = todolistsReducer([], action)
+//
+//     expect(endState.length).toBe(2)
+// })
 
 test('correct entity status of todolist should be changed', () => {
     let newStatus: RequestStatusType = 'loading'

@@ -48,7 +48,7 @@ const slice = createSlice({
 })
 
 // thunks
-const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
+const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, undefined>(
     'todolists/fetchTodolists',
     async (arg, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
