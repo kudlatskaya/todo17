@@ -1,6 +1,5 @@
 import { appActions } from 'app/app-reducer'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AppThunk } from 'app/store'
+import { createSlice } from '@reduxjs/toolkit'
 import { tasksActions } from 'features/TodolistsList/tasks-reducer'
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from 'common/utils'
 import { authAPI, LoginParamsType } from 'features/auth/authApi'
@@ -11,16 +10,15 @@ const slice = createSlice({
     initialState: {
         isLoggedIn: false,
     },
-    reducers: {
-        setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
-            state.isLoggedIn = action.payload.isLoggedIn
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn
         })
         builder.addCase(logout.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.isLoggedIn
+        })
+        builder.addCase(initializeApp.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn
         })
     },
@@ -42,11 +40,11 @@ const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
                 handleServerAppError(res.data, dispatch)
                 return rejectWithValue(null)
             }
-
-            dispatch(appActions.setAppInitialized({ isInitialized: true }))
         } catch (e: any) {
             handleServerNetworkError(e, dispatch)
             return rejectWithValue(null)
+        } finally {
+            dispatch(appActions.setAppInitialized({ isInitialized: true }))
         }
     },
 )
