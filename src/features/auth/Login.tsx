@@ -33,6 +33,13 @@ export const Login = () => {
         },
         onSubmit: (values) => {
             dispatch(authThunks.login(values))
+                .unwrap()
+                .then((res) => {
+                    console.log('then')
+                })
+                .catch((err) => {
+                    console.log('catch')
+                })
         },
     })
 

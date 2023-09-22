@@ -37,7 +37,7 @@ const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
             if (res.data.resultCode === ResultCode.success) {
                 return { isLoggedIn: true }
             } else {
-                handleServerAppError(res.data, dispatch)
+                //handleServerAppError(res.data, dispatch)
                 return rejectWithValue(null)
             }
         } catch (e: any) {
@@ -95,5 +95,4 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>('auth/log
 // types
 
 export const authReducer = slice.reducer
-export const authActions = slice.actions
 export const authThunks = { login, logout, initializeApp }

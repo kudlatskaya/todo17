@@ -28,4 +28,3 @@ export type AppInitialStateType = typeof initialState
 
 export const appReducer = slice.reducer
 export const appActions = slice.actions
-// export const tasksThunks = { initializeApp }
