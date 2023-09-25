@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFormik } from 'formik'
+import { FormikHelpers, useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 import { authThunks } from './auth-reducer'
 import { AppRootStateType } from 'app/store'
@@ -7,6 +7,8 @@ import { Navigate } from 'react-router-dom'
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from '@mui/material'
 import { isLoggedInSelector } from 'features/auth/login-selectors'
 import { useAppDispatch } from 'common/hooks'
+import { LoginParamsType } from 'features/auth/authApi'
+import { BaseResponse } from 'common/types'
 
 export const Login = () => {
     const dispatch = useAppDispatch()
@@ -14,31 +16,31 @@ export const Login = () => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(isLoggedInSelector)
 
     const formik = useFormik({
-        validate: (values) => {
-            if (!values.email) {
-                return {
-                    email: 'Email is required',
-                }
-            }
-            if (!values.password) {
-                return {
-                    password: 'Password is required',
-                }
-            }
-        },
+        // validate: (values) => {
+        //     if (!values.email) {
+        //         return {
+        //             email: 'Email is required',
+        //         }
+        //     }
+        //     if (!values.password) {
+        //         return {
+        //             password: 'Password is required',
+        //         }
+        //     }
+        // },
         initialValues: {
             email: '',
             password: '',
             rememberMe: false,
         },
-        onSubmit: (values) => {
+        onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
             dispatch(authThunks.login(values))
                 .unwrap()
-                .then((res) => {
-                    console.log('then')
-                })
-                .catch((err) => {
-                    console.log('catch')
+                .then((res) => {})
+                .catch((err: BaseResponse) => {
+                    err.fieldsErrors.forEach((f) => {
+                        formikHelpers.setFieldError(f.field, f.error)
+                    })
                 })
         },
     })
@@ -65,14 +67,16 @@ export const Login = () => {
                         </FormLabel>
                         <FormGroup>
                             <TextField label='Email' margin='normal' {...formik.getFieldProps('email')} />
-                            {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                            {formik.errors.email ? <div style={{ color: 'red' }}>{formik.errors.email}</div> : null}
                             <TextField
                                 type='password'
                                 label='Password'
                                 margin='normal'
                                 {...formik.getFieldProps('password')}
                             />
-                            {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                            {formik.errors.password ? (
+                                <div style={{ color: 'red' }}>{formik.errors.password}</div>
+                            ) : null}
                             <FormControlLabel
                                 label={'Remember me'}
                                 control={
