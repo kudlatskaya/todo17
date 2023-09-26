@@ -59,7 +59,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType, { re
             dispatch(appActions.setAppStatus({ status: 'loading' }))
 
             const res = await authAPI.login(arg)
-
+            // console.log(res.data.resultCode)
             if (res.data.resultCode === ResultCode.success) {
                 dispatch(appActions.setAppStatus({ status: 'succeeded' }))
                 return { isLoggedIn: true }
