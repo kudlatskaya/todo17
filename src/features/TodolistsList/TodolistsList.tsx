@@ -22,8 +22,12 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(isLoggedInSelector)
 
     const { fetchTodolists, removeTodolist, addTodolist, changeTodolistTitle } = useActions(todolistsThunks)
-    const { removeTask, addTask, updateTask } = useActions(tasksThunks)
-    const { changeTodolistFilter } = useActions(todolistsActions)
+    // const { removeTask, addTask, updateTask } = useActions(tasksThunks)
+    // const { changeTodolistFilter } = useActions(todolistsActions)
+    const { changeTodolistFilter, addTask, updateTask, removeTask } = useActions({
+        ...tasksThunks,
+        ...todolistsActions,
+    })
 
     useEffect(() => {
         if (demo || !isLoggedIn) {
