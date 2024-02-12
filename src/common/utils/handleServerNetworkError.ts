@@ -2,6 +2,11 @@ import { appActions } from 'app/app-reducer'
 import { AppDispatch } from 'app/store'
 import axios from 'axios'
 
+/**
+ * handleServerNetworkError network error handling function
+ * @param err - network error
+ * @param dispatch - method to set error to store
+ */
 export const handleServerNetworkError = (err: unknown, dispatch: AppDispatch): void => {
     let errorMessage = 'Some error occurred'
 

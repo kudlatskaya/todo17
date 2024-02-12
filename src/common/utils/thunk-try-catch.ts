@@ -4,6 +4,12 @@ import { BaseResponse } from 'common/types'
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError'
 import { appActions } from 'app/app-reducer'
 
+/**
+ * thunkTryCatch - the function implements error handling using try/catch blocks
+ * @param thunkAPI
+ * @param logic - the function returns promise and called in try block
+ */
+
 export const thunkTryCatch = async <T>(
     thunkAPI: BaseThunkAPI<AppRootStateType, unknown, AppDispatch, null | BaseResponse>,
     logic: () => Promise<T>,

@@ -10,6 +10,8 @@ import { useAppDispatch } from 'common/hooks'
 import { LoginParamsType } from 'features/auth/authApi'
 import { BaseResponse } from 'common/types'
 
+type FormikErrorType = Partial<Omit<LoginParamsType, 'captcha'>>
+
 export const Login = () => {
     const dispatch = useAppDispatch()
 
@@ -17,16 +19,14 @@ export const Login = () => {
 
     const formik = useFormik({
         validate: (values) => {
-            //     if (!values.email) {
-            //         return {
-            //             email: 'Email is required',
-            //         }
-            //     }
-            //     if (!values.password) {
-            //         return {
-            //             password: 'Password is required',
-            //         }
-            //     }
+            const errors: FormikErrorType = {}
+
+            if (!values.email) {
+                errors.email = 'Email is required'
+            }
+            if (!values.password) {
+                errors.password = 'Password is required'
+            }
         },
         initialValues: {
             email: '',
