@@ -1,48 +1,15 @@
 import React from 'react'
-import { FormikHelpers, useFormik } from 'formik'
 import { useSelector } from 'react-redux'
-import { authThunks } from './auth-reducer'
 import { AppRootStateType } from 'app/store'
 import { Navigate } from 'react-router-dom'
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from '@mui/material'
 import { isLoggedInSelector } from 'features/auth/login-selectors'
-import { useAppDispatch } from 'common/hooks'
-import { LoginParamsType } from 'features/auth/authApi'
-import { BaseResponse } from 'common/types'
-
-type FormikErrorType = Partial<Omit<LoginParamsType, 'captcha'>>
+import { useLogin } from 'common/lib/useLogin'
 
 export const Login = () => {
-    const dispatch = useAppDispatch()
-
     const isLoggedIn = useSelector<AppRootStateType, boolean>(isLoggedInSelector)
 
-    const formik = useFormik({
-        validate: (values) => {
-            const errors: FormikErrorType = {}
-
-            if (!values.email) {
-                errors.email = 'Email is required'
-            }
-            if (!values.password) {
-                errors.password = 'Password is required'
-            }
-        },
-        initialValues: {
-            email: '',
-            password: '',
-            rememberMe: false,
-        },
-        onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
-            dispatch(authThunks.login(values))
-                .unwrap()
-                .catch((err: BaseResponse) => {
-                    err.fieldsErrors?.forEach((item) => {
-                        formikHelpers.setFieldError(item.field, item.error)
-                    })
-                })
-        },
-    })
+    const { formik } = useLogin()
 
     if (isLoggedIn) {
         return <Navigate to={'/'} />
