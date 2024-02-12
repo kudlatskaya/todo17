@@ -1,4 +1,4 @@
-import { UpdateDomainTaskModelType } from 'features/TodolistsList/tasks-reducer'
+import { UpdateDomainTaskModelType } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
 
 export type DeleteTaskArg = {
@@ -29,6 +29,7 @@ export type TaskType = {
     order: number
     addedDate: string
 }
+
 export type UpdateTaskModelType = {
     title: string
     description: string
@@ -37,6 +38,7 @@ export type UpdateTaskModelType = {
     startDate: string
     deadline: string
 }
+
 export type GetTasksResponse = {
     error: string | null
     totalCount: number

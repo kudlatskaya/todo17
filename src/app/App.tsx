@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect} from 'react'
+import React, { useCallback, useEffect } from 'react'
 import './App.css'
-import {TodolistsList} from 'features/TodolistsList/TodolistsList'
-import {useSelector} from 'react-redux'
-import {AppRootStateType} from './store'
-import {RequestStatusType} from './app-reducer'
-import {Route, Routes} from 'react-router-dom'
-import {Login} from 'features/auth/Login'
-import {authThunks} from 'features/auth/auth-reducer'
+import { TodolistsList } from 'features/TodolistsList/ui/TodolistsList'
+import { useSelector } from 'react-redux'
+import { AppRootStateType } from './store'
+import { RequestStatusType } from './app-reducer'
+import { Route, Routes } from 'react-router-dom'
+import { Login } from 'features/auth/ui/Login'
+import { authThunks } from 'features/auth/model/auth-reducer'
 import {
     AppBar,
     Button,
@@ -17,20 +17,20 @@ import {
     Toolbar,
     Typography,
 } from '@mui/material'
-import {Menu} from '@mui/icons-material'
-import {isInitializedSelector, isLoggedInSelector, statusSelector} from 'app/app.selectors'
-import {ErrorSnackbar} from 'common/components'
-import {useActions} from 'common/hooks/ useActions'
+import { Menu } from '@mui/icons-material'
+import { isInitializedSelector, isLoggedInSelector, statusSelector } from 'app/app.selectors'
+import { ErrorSnackbar } from 'common/components'
+import { useActions } from 'common/hooks/ useActions'
 
 type PropsType = {
     demo?: boolean
 }
 
-function App({demo = false}: PropsType) {
+function App({ demo = false }: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>(statusSelector)
     const isInitialized = useSelector<AppRootStateType, boolean>(isInitializedSelector)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(isLoggedInSelector)
-    const {initializeApp, logout} = useActions(authThunks)
+    const { initializeApp, logout } = useActions(authThunks)
 
     useEffect(() => {
         initializeApp()
@@ -42,20 +42,19 @@ function App({demo = false}: PropsType) {
 
     if (!isInitialized) {
         return (
-            <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
-                <CircularProgress/>
+            <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+                <CircularProgress />
             </div>
         )
     }
 
     return (
-
         <div className='App'>
-            <ErrorSnackbar/>
+            <ErrorSnackbar />
             <AppBar position='static'>
                 <Toolbar>
                     <IconButton edge='start' color='inherit' aria-label='menu'>
-                        <Menu/>
+                        <Menu />
                     </IconButton>
                     <Typography variant='h6'>News</Typography>
                     {isLoggedIn && (
@@ -64,16 +63,15 @@ function App({demo = false}: PropsType) {
                         </Button>
                     )}
                 </Toolbar>
-                {status === 'loading' && <LinearProgress/>}
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
             <Container fixed>
                 <Routes>
-                    <Route path={'/'} element={<TodolistsList demo={demo}/>}/>
-                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/'} element={<TodolistsList demo={demo} />} />
+                    <Route path={'/login'} element={<Login />} />
                 </Routes>
             </Container>
         </div>
-
     )
 }
 

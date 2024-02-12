@@ -2,7 +2,7 @@ import React, { ChangeEvent, useCallback } from 'react'
 import { Checkbox, IconButton } from '@mui/material'
 import { Delete } from '@mui/icons-material'
 import { TaskStatuses } from 'common/enums'
-import { TaskType } from 'features/TodolistsList/taskApiTypes'
+import { TaskType } from 'features/TodolistsList/api/tasks/taskApiTypes'
 import { EditableSpan } from 'common/components'
 
 type TaskPropsType = {
@@ -13,7 +13,13 @@ type TaskPropsType = {
     removeTask: (taskId: string, todolistId: string) => void
 }
 
+const removeTaskCB = useCallback(function (taskId: string, todolistId: string) {
+    removeTask({ taskId, todolistId })
+}, [])
+
 export const Task = React.memo((props: TaskPropsType) => {
+    const { removeTask }
+
     const onClickHandler = useCallback(
         () => props.removeTask(props.task.id, props.todolistId),
         [props.task.id, props.todolistId],

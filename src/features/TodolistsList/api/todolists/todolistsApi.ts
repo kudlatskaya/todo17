@@ -1,6 +1,6 @@
 import { BaseResponse } from 'common/types'
 import { instance } from 'common/api/api'
-import { UpdateTodolistArg } from 'features/TodolistsList/todolistApiTypee'
+import { UpdateTodolistArg } from 'features/TodolistsList/api/todolists/todolistApiTypes'
 
 export const todolistsAPI = {
     getTodolists() {

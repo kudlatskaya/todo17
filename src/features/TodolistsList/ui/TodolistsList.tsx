@@ -1,12 +1,17 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { AppRootStateType } from 'app/store'
-import { FilterValuesType, TodolistDomainType, todolistsActions, todolistsThunks } from './todolists-reducer'
-import { TasksStateType, tasksThunks } from './tasks-reducer'
+import {
+    FilterValuesType,
+    TodolistDomainType,
+    todolistsActions,
+    todolistsThunks,
+} from 'features/TodolistsList/model/todolists/todolistsSlice'
+import { TasksStateType, tasksThunks } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { Grid, Paper } from '@mui/material'
-import { Todolist } from './Todolist/Todolist'
+import { Todolist } from 'features/TodolistsList/ui/Todolist/Todolist'
 import { Navigate } from 'react-router-dom'
-import { isLoggedInSelector, tasksSelector, todolistsSelector } from 'features/TodolistsList/todolistslist-selector'
+import { isLoggedInSelector, tasksSelector, todolistsSelector } from 'features/TodolistsList/lib/todolistslist-selector'
 import { TaskStatuses } from 'common/enums'
 import { AddItemForm } from 'common/components'
 import { useActions } from 'common/hooks/ useActions'
@@ -24,7 +29,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     const { fetchTodolists, removeTodolist, addTodolist, changeTodolistTitle } = useActions(todolistsThunks)
     // const { removeTask, addTask, updateTask } = useActions(tasksThunks)
     // const { changeTodolistFilter } = useActions(todolistsActions)
-    const { changeTodolistFilter, addTask, updateTask, removeTask } = useActions({
+    const { changeTodolistFilter, addTask, updateTask } = useActions({
         ...tasksThunks,
         ...todolistsActions,
     })
@@ -34,10 +39,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
             return
         }
         fetchTodolists()
-    }, [])
-
-    const removeTaskCB = useCallback(function (taskId: string, todolistId: string) {
-        removeTask({ taskId, todolistId })
     }, [])
 
     const addTaskCB = useCallback(function (title: string, todolistId: string) {
@@ -87,7 +88,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                                 <Todolist
                                     todolist={tl}
                                     tasks={allTodolistTasks}
-                                    removeTask={removeTaskCB}
                                     changeFilter={changeFilterCB}
                                     addTask={addTaskCB}
                                     changeTaskStatus={changeStatusCB}

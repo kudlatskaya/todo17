@@ -1,10 +1,11 @@
 import { appActions } from 'app/app-reducer'
 import { createSlice } from '@reduxjs/toolkit'
-import { tasksActions } from 'features/TodolistsList/tasks-reducer'
+import { tasksActions } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError, thunkTryCatch } from 'common/utils'
-import { authAPI, LoginParamsType } from 'features/auth/authApi'
+import { authAPI } from 'features/auth/api/authApi'
 import { ResultCode } from 'common/enums'
 import { BaseResponse } from 'common/types'
+import { LoginParamsType } from 'features/auth/api/auth.types'
 
 const slice = createSlice({
     name: 'auth',

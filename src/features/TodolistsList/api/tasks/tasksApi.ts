@@ -6,7 +6,7 @@ import {
     GetTasksResponse,
     TaskType,
     UpdateTaskModelType,
-} from 'features/TodolistsList/taskApiTypes'
+} from 'features/TodolistsList/api/tasks/taskApiTypes'
 
 export const tasksAPI = {
     getTasks(todolistId: string) {
