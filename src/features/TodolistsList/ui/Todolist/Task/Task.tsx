@@ -4,26 +4,20 @@ import { Delete } from '@mui/icons-material'
 import { TaskStatuses } from 'common/enums'
 import { TaskType } from 'features/TodolistsList/api/tasks/taskApiTypes'
 import { EditableSpan } from 'common/components'
+import { useActions } from 'common/hooks/ useActions'
+import { tasksThunks } from 'features/TodolistsList/model/tasks/tasksSlice'
 
 type TaskPropsType = {
     task: TaskType
     todolistId: string
     changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
-    removeTask: (taskId: string, todolistId: string) => void
 }
 
-const removeTaskCB = useCallback(function (taskId: string, todolistId: string) {
-    removeTask({ taskId, todolistId })
-}, [])
-
 export const Task = React.memo((props: TaskPropsType) => {
-    const { removeTask }
+    const { removeTask } = useActions(tasksThunks)
 
-    const onClickHandler = useCallback(
-        () => props.removeTask(props.task.id, props.todolistId),
-        [props.task.id, props.todolistId],
-    )
+    const removeTaskHandler = () => removeTask({ taskId: props.task.id, todolistId: props.todolistId })
 
     const onChangeHandler = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +47,7 @@ export const Task = React.memo((props: TaskPropsType) => {
             />
 
             <EditableSpan value={props.task.title} onChange={onTitleChangeHandler} />
-            <IconButton onClick={onClickHandler}>
+            <IconButton onClick={removeTaskHandler}>
                 <Delete />
             </IconButton>
         </div>
