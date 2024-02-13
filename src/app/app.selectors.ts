@@ -1,5 +1,5 @@
-import { AppRootStateType } from 'app/store'
+import { AppRootState } from 'app/store'
 
-export const statusSelector = (state: AppRootStateType) => state.app.status
-export const isInitializedSelector = (state: AppRootStateType) => state.app.isInitialized
-export const isLoggedInSelector = (state: AppRootStateType) => state.auth.isLoggedIn
+export const statusSelector = (state: AppRootState) => state.app.status
+export const isInitializedSelector = (state: AppRootState) => state.app.isInitialized
+export const isLoggedInSelector = (state: AppRootState) => state.auth.isLoggedIn

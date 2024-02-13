@@ -6,7 +6,7 @@ import {
     todolistsThunks,
 } from 'features/TodolistsList/model/todolists/todolistsSlice'
 import { v1 } from 'uuid'
-import { RequestStatusType } from 'app/app-reducer'
+import { RequestStatus } from 'app/app-reducer'
 import { TodolistType } from 'features/TodolistsList/api/todolists/todolistsApi'
 
 let todolistId1: string
@@ -86,7 +86,7 @@ test('correct filter of todolist should be changed', () => {
 // })
 
 test('correct entity status of todolist should be changed', () => {
-    let newStatus: RequestStatusType = 'loading'
+    let newStatus: RequestStatus = 'loading'
     const action = todolistsActions.changeTodolistEntityStatus({ todolistId: todolistId2, entityStatus: newStatus })
 
     const endState = todolistsReducer(startState, action)

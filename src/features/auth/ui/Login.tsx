@@ -1,13 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { AppRootStateType } from 'app/store'
+import { AppRootState } from 'app/store'
 import { Navigate } from 'react-router-dom'
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from '@mui/material'
 import { isLoggedInSelector } from 'features/auth/lib/login-selectors'
 import { useLogin } from 'common/lib/useLogin'
 
 export const Login = () => {
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(isLoggedInSelector)
+    const isLoggedIn = useSelector<AppRootState, boolean>(isLoggedInSelector)
 
     const { formik } = useLogin()
 

@@ -1,6 +1,6 @@
-import { AppRootStateType } from 'app/store'
+import { AppRootState } from 'app/store'
 
-export const todolistsSelector = (state: AppRootStateType) => state.todolists
+export const todolistsSelector = (state: AppRootState) => state.todolists
 
-export const tasksSelector = (state: AppRootStateType) => state.tasks
-export const isLoggedInSelector = (state: AppRootStateType) => state.auth.isLoggedIn
+export const tasksSelector = (state: AppRootState) => state.tasks
+export const isLoggedInSelector = (state: AppRootState) => state.auth.isLoggedIn

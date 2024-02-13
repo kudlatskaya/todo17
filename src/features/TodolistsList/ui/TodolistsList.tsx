@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { AppRootStateType } from 'app/store'
+import { AppRootState } from 'app/store'
 import {
     FilterValuesType,
     TodolistDomainType,
@@ -12,19 +12,18 @@ import { Grid, Paper } from '@mui/material'
 import { Todolist } from 'features/TodolistsList/ui/Todolist/Todolist'
 import { Navigate } from 'react-router-dom'
 import { isLoggedInSelector, tasksSelector, todolistsSelector } from 'features/TodolistsList/lib/todolistslist-selector'
-import { TaskStatuses } from 'common/enums'
 import { AddItemForm } from 'common/components'
 import { useActions } from 'common/hooks/ useActions'
 
-type PropsType = {
+type Props = {
     demo?: boolean
 }
 
-export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
-    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(todolistsSelector)
+export const TodolistsList: React.FC<Props> = ({ demo = false }) => {
+    const todolists = useSelector<AppRootState, Array<TodolistDomainType>>(todolistsSelector)
 
-    const tasks = useSelector<AppRootStateType, TasksStateType>(tasksSelector)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(isLoggedInSelector)
+    const tasks = useSelector<AppRootState, TasksStateType>(tasksSelector)
+    const isLoggedIn = useSelector<AppRootState, boolean>(isLoggedInSelector)
 
     const { fetchTodolists, removeTodolist, addTodolist, changeTodolistTitle } = useActions(todolistsThunks)
     // const { removeTask, addTask, updateTask } = useActions(tasksThunks)
@@ -43,14 +42,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
 
     const addTaskCB = useCallback(function (title: string, todolistId: string) {
         addTask({ title, todolistId })
-    }, [])
-
-    const changeStatusCB = useCallback(function (taskId: string, status: TaskStatuses, todolistId: string) {
-        updateTask({ taskId, todolistId, domainModel: { status } })
-    }, [])
-
-    const changeTaskTitleCB = useCallback(function (taskId: string, title: string, todolistId: string) {
-        updateTask({ taskId, todolistId, domainModel: { title } })
     }, [])
 
     const changeFilterCB = useCallback(function (filter: FilterValuesType, id: string) {
@@ -90,9 +81,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                                     tasks={allTodolistTasks}
                                     changeFilter={changeFilterCB}
                                     addTask={addTaskCB}
-                                    changeTaskStatus={changeStatusCB}
                                     removeTodolist={removeTodolistCB}
-                                    changeTaskTitle={changeTaskTitleCB}
                                     changeTodolistTitle={changeTodolistTitleCB}
                                     demo={demo}
                                 />

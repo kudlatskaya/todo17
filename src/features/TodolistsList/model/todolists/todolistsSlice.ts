@@ -1,4 +1,4 @@
-import { RequestStatusType } from 'app/app-reducer'
+import { RequestStatus } from 'app/app-reducer'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { tasksActions, tasksThunks } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { todolistsAPI, TodolistType } from 'features/TodolistsList/api/todolists/todolistsApi'
@@ -18,7 +18,7 @@ const slice = createSlice({
         },
         changeTodolistEntityStatus: (
             state,
-            action: PayloadAction<{ todolistId: string; entityStatus: RequestStatusType }>,
+            action: PayloadAction<{ todolistId: string; entityStatus: RequestStatus }>,
         ) => {
             const index = state.findIndex((todo) => todo.id === action.payload.todolistId)
             if (index !== -1) state[index].entityStatus = action.payload.entityStatus
@@ -126,7 +126,7 @@ const changeTodolistTitle = createAppAsyncThunk<UpdateTodolistArg, UpdateTodolis
 export type FilterValuesType = 'all' | 'active' | 'completed'
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
-    entityStatus: RequestStatusType
+    entityStatus: RequestStatus
 }
 
 export const todolistsReducer = slice.reducer

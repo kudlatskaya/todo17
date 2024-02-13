@@ -9,19 +9,17 @@ import { TaskStatuses } from 'common/enums'
 import { TaskType } from 'features/TodolistsList/api/tasks/taskApiTypes'
 import { useAppDispatch } from 'common/hooks'
 
-type PropsType = {
+type Props = {
     todolist: TodolistDomainType
     tasks: Array<TaskType>
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void
-    changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
     removeTodolist: (id: string) => void
     changeTodolistTitle: (id: string, newTitle: string) => void
     demo?: boolean
 }
 
-export const Todolist = React.memo(function ({ demo = false, ...props }: PropsType) {
+export const Todolist = React.memo(function ({ demo = false, ...props }: Props) {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -81,13 +79,7 @@ export const Todolist = React.memo(function ({ demo = false, ...props }: PropsTy
             <AddItemForm addItem={addTask} disabled={props.todolist.entityStatus === 'loading'} />
             <div>
                 {tasksForTodolist.map((t) => (
-                    <Task
-                        key={t.id}
-                        task={t}
-                        todolistId={props.todolist.id}
-                        changeTaskTitle={props.changeTaskTitle}
-                        changeTaskStatus={props.changeTaskStatus}
-                    />
+                    <Task key={t.id} task={t} todolistId={props.todolist.id} />
                 ))}
             </div>
             <div style={{ paddingTop: '10px' }}>
