@@ -1,11 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { Task } from 'features/TodolistsList/ui/Todolist/Task/Task'
-import {
-    TodolistDomainType,
-    todolistsActions,
-    todolistsThunks,
-} from 'features/TodolistsList/model/todolists/todolistsSlice'
-import { Button, IconButton } from '@mui/material'
+import { TodolistDomainType, todolistsThunks } from 'features/TodolistsList/model/todolists/todolistsSlice'
+import { IconButton } from '@mui/material'
 import { Delete } from '@mui/icons-material'
 import { tasksThunks } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { AddItemForm, EditableSpan } from 'common/components'
@@ -13,6 +9,7 @@ import { TaskStatuses } from 'common/enums'
 import { TaskType } from 'features/TodolistsList/api/tasks/taskApiTypes'
 import { useAppDispatch } from 'common/hooks'
 import { useActions } from 'common/hooks/ useActions'
+import FilterTaskButton from 'features/TodolistsList/ui/Todolist/FilterTasksButton/FilterTaskButton'
 
 type Props = {
     todolist: TodolistDomainType
@@ -23,7 +20,6 @@ type Props = {
 export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: Props) {
     const dispatch = useAppDispatch()
     const { addTask } = useActions(tasksThunks)
-    const { changeTodolistFilter } = useActions(todolistsActions)
     const { removeTodolist, changeTodolistTitle } = useActions(todolistsThunks)
 
     useEffect(() => {
@@ -48,18 +44,6 @@ export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: 
         (title: string) => {
             changeTodolistTitle({ id: todolist.id, title })
         },
-        [todolist.id],
-    )
-
-    const allFilterHandler = useCallback(() => changeTodolistFilter({ id: todolist.id, filter: 'all' }), [todolist.id])
-
-    const activeFilterHandler = useCallback(
-        () => changeTodolistFilter({ id: todolist.id, filter: 'active' }),
-        [todolist.id],
-    )
-
-    const completedFilterHandler = useCallback(
-        () => changeTodolistFilter({ id: todolist.id, filter: 'completed' }),
         [todolist.id],
     )
 
@@ -88,24 +72,9 @@ export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: 
                 ))}
             </div>
             <div style={{ paddingTop: '10px' }}>
-                <Button
-                    variant={todolist.filter === 'all' ? 'outlined' : 'text'}
-                    onClick={allFilterHandler}
-                    color={'inherit'}>
-                    All
-                </Button>
-                <Button
-                    variant={todolist.filter === 'active' ? 'outlined' : 'text'}
-                    onClick={activeFilterHandler}
-                    color={'primary'}>
-                    Active
-                </Button>
-                <Button
-                    variant={todolist.filter === 'completed' ? 'outlined' : 'text'}
-                    onClick={completedFilterHandler}
-                    color={'secondary'}>
-                    Completed
-                </Button>
+                <FilterTaskButton todolist={todolist} filter={'all'} title={'All'} color={'inherit'} />
+                <FilterTaskButton todolist={todolist} filter={'active'} title={'Active'} color={'primary'} />
+                <FilterTaskButton todolist={todolist} filter={'completed'} title={'Completed'} color={'secondary'} />
             </div>
         </div>
     )

@@ -10,3 +10,5 @@ export type BaseResponse<D = {}> = {
     data: D
     fieldsErrors: FieldErrorType[]
 }
+
+export type ButtonColor = 'error' | 'inherit' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | undefined
