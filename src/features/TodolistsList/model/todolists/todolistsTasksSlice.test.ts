@@ -18,7 +18,7 @@ test('ids should be equals', () => {
         order: 0,
     }
 
-    const action = todolistsThunks.addTodolist.fulfilled({ todolist }, '', { title: todolist.title })
+    const action = todolistsThunks.addTodolist.fulfilled({ todolist }, '', todolist.title)
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)

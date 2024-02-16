@@ -84,19 +84,19 @@ const removeTodolist = createAppAsyncThunk<{ id: string }, string>(
     },
 )
 
-const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, { title: string }>(
+const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
     'todolists/addTodolist',
-    async (arg, thunkAPI) => {
+    async (title, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
 
         return thunkTryCatch(thunkAPI, async () => {
-            const res = await todolistsAPI.createTodolist(arg.title)
+            const res = await todolistsAPI.createTodolist(title)
 
             if (res.data.resultCode === ResultCode.success) {
                 return { todolist: res.data.data.item }
             } else {
                 handleServerAppError(res.data, dispatch)
-                return rejectWithValue(null)
+                return rejectWithValue(res.data)
             }
         })
     },
