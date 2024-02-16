@@ -10,23 +10,24 @@ import { ButtonColor } from 'common/types/types'
 
 type Props = {
     todolist: TodolistDomainType
-    filter: FilterValuesType
+    filterValues: FilterValuesType
     title: string
     color: ButtonColor
 }
 
-const FilterTaskButton = ({ todolist, filter, title, color }: Props) => {
+const FilterTasksButton = ({ todolist, filterValues, title, color }: Props) => {
+    const { id, filter } = todolist
     const { changeTodolistFilter } = useActions(todolistsActions)
 
     const filterHandler = () => {
-        changeTodolistFilter({ id: todolist.id, filter })
+        changeTodolistFilter({ id, filter: filterValues })
     }
 
     return (
-        <Button variant={todolist.filter === filter ? 'outlined' : 'text'} onClick={filterHandler} color={color}>
+        <Button variant={filter === filterValues ? 'outlined' : 'text'} onClick={filterHandler} color={color}>
             {title}
         </Button>
     )
 }
 
-export default FilterTaskButton
+export default FilterTasksButton

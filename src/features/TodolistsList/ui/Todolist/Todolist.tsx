@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect } from 'react'
-import { Task } from 'features/TodolistsList/ui/Todolist/Task/Task'
 import { TodolistDomainType, todolistsThunks } from 'features/TodolistsList/model/todolists/todolistsSlice'
 import { IconButton } from '@mui/material'
 import { Delete } from '@mui/icons-material'
 import { tasksThunks } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { AddItemForm, EditableSpan } from 'common/components'
-import { TaskStatuses } from 'common/enums'
 import { TaskType } from 'features/TodolistsList/api/tasks/taskApiTypes'
 import { useAppDispatch } from 'common/hooks'
 import { useActions } from 'common/hooks/ useActions'
-import FilterTaskButton from 'features/TodolistsList/ui/Todolist/FilterTasksButton/FilterTaskButton'
+import FilterTasksButton from 'features/TodolistsList/ui/Todolist/FilterTasksButton/FilterTasksButton'
+import Tasks from 'features/TodolistsList/ui/Todolist/Tasks/Tasks'
 
 type Props = {
     todolist: TodolistDomainType
@@ -47,16 +46,6 @@ export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: 
         [todolist.id],
     )
 
-    let tasksForTodolist = tasks
-
-    if (todolist.filter === 'active') {
-        tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.New)
-    }
-
-    if (todolist.filter === 'completed') {
-        tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.Completed)
-    }
-
     return (
         <div>
             <h3>
@@ -65,16 +54,20 @@ export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: 
                     <Delete />
                 </IconButton>
             </h3>
+
             <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === 'loading'} />
-            <div>
-                {tasksForTodolist.map((t) => (
-                    <Task key={t.id} task={t} todolistId={todolist.id} />
-                ))}
-            </div>
+
+            <Tasks todolist={todolist} tasks={tasks} />
+
             <div style={{ paddingTop: '10px' }}>
-                <FilterTaskButton todolist={todolist} filter={'all'} title={'All'} color={'inherit'} />
-                <FilterTaskButton todolist={todolist} filter={'active'} title={'Active'} color={'primary'} />
-                <FilterTaskButton todolist={todolist} filter={'completed'} title={'Completed'} color={'secondary'} />
+                <FilterTasksButton todolist={todolist} filterValues={'all'} title={'All'} color={'inherit'} />
+                <FilterTasksButton todolist={todolist} filterValues={'active'} title={'Active'} color={'primary'} />
+                <FilterTasksButton
+                    todolist={todolist}
+                    filterValues={'completed'}
+                    title={'Completed'}
+                    color={'secondary'}
+                />
             </div>
         </div>
     )
