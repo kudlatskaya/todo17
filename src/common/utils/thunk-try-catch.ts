@@ -21,7 +21,5 @@ export const thunkTryCatch = async <T>(
     } catch (e) {
         handleServerNetworkError(e, dispatch)
         return rejectWithValue(null)
-    } finally {
-        dispatch(appActions.setAppStatus({ status: 'idle' }))
     }
 }
