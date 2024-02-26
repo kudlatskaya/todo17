@@ -50,18 +50,9 @@ const slice = createSlice({
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, undefined>(
     'todolists/fetchTodolists',
-    async (arg, thunkAPI) => {
-        const { dispatch } = thunkAPI
-
-        return thunkTryCatch(thunkAPI, async () => {
-            const res = await todolistsAPI.getTodolists()
-            let todolists = res.data
-
-            todolists.forEach((tl) => {
-                dispatch(tasksThunks.fetchTasks(tl.id))
-            })
-            return { todolists }
-        })
+    async () => {
+        const res = await todolistsAPI.getTodolists()
+        return { todolists: res.data }
     },
 )
 

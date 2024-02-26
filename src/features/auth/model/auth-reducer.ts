@@ -1,5 +1,5 @@
 import { appActions } from 'app/app-reducer'
-import { createSlice } from '@reduxjs/toolkit'
+import { AnyAction, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { tasksActions } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError, thunkTryCatch } from 'common/utils'
 import { authAPI } from 'features/auth/api/authApi'
@@ -14,15 +14,12 @@ const slice = createSlice({
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(login.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.isLoggedIn
-        })
-        builder.addCase(logout.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.isLoggedIn
-        })
-        builder.addCase(initializeApp.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.isLoggedIn
-        })
+        builder.addMatcher(
+            isAnyOf(authThunks.login.fulfilled, authThunks.logout.fulfilled, authThunks.initializeApp.fulfilled),
+            (state, action) => {
+                state.isLoggedIn = action.payload.isLoggedIn
+            },
+        )
     },
 })
 
