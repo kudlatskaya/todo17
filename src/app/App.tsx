@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react'
-import { TodolistsList } from 'features/TodolistsList/ui/TodolistsList'
 import { useSelector } from 'react-redux'
 import { AppRootState } from './store'
-import { Route, Routes } from 'react-router-dom'
-import { Login } from 'features/auth/ui/Login'
 import { authThunks } from 'features/auth/model/auth-reducer'
-import { CircularProgress, Container } from '@mui/material'
+import { CircularProgress } from '@mui/material'
 import { isInitializedSelector } from 'app/app.selectors'
 import { ErrorSnackbar } from 'common/components'
 import { useActions } from 'common/hooks/ useActions'
 import Header from 'app/Header/Header'
+import Routing from 'app/Routing/Routing'
 
 type Props = {
     demo?: boolean
@@ -35,12 +33,7 @@ function App({ demo = false }: Props) {
         <div className='App'>
             <ErrorSnackbar />
             <Header />
-            <Container fixed>
-                <Routes>
-                    <Route path={'/'} element={<TodolistsList demo={demo} />} />
-                    <Route path={'/login'} element={<Login />} />
-                </Routes>
-            </Container>
+            <Routing demo={demo} />
         </div>
     )
 }
