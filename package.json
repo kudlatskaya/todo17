@@ -7,7 +7,7 @@
     },
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://kudlatskaya.github.com/todo17",
+    "homepage": "https://kudlatskaya.github.com",
     "dependencies": {
         "@babel/runtime": "^7.21.0",
         "@emotion/react": "^11.10.6",
