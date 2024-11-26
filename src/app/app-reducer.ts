@@ -23,7 +23,6 @@ const slice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        // builder.addMatcher(isPending(todolistsThunks.fetchTodolists, tasksThunks.addTask), (state, action) => {
         builder
             .addMatcher(isPending, (state) => {
                 state.status = 'loading'

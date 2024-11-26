@@ -82,26 +82,6 @@ const removeTask = createAppAsyncThunk<DeleteTaskArg, DeleteTaskArg>('tasks/remo
     })
 })
 
-const _removeTask = createAppAsyncThunk<DeleteTaskArg, DeleteTaskArg>('tasks/removeTask', async (arg, thunkAPI) => {
-    const { dispatch, rejectWithValue } = thunkAPI
-
-    try {
-        dispatch(appActions.setAppStatus({ status: 'loading' }))
-        const res = await tasksAPI.deleteTask(arg)
-
-        if (res.data.resultCode === ResultCode.success) {
-            dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-            return { taskId: arg.taskId, todolistId: arg.todolistId }
-        } else {
-            handleServerAppError(res.data, dispatch)
-            return rejectWithValue(null)
-        }
-    } catch (e: any) {
-        handleServerNetworkError(e, dispatch)
-        return rejectWithValue(null)
-    }
-})
-
 const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArg>('tasks/addTask', async (arg, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI
 

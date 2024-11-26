@@ -1,4 +1,4 @@
-import { appActions } from 'app/app-reducer'
+import { appActions, RequestStatus } from 'app/app-reducer'
 import { AnyAction, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { tasksActions } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError, thunkTryCatch } from 'common/utils'
@@ -7,11 +7,13 @@ import { ResultCode } from 'common/enums'
 import { BaseResponse } from 'common/types'
 import { LoginParamsType } from 'features/auth/api/auth.types'
 
+const initialState = {
+    isLoggedIn: false,
+}
+
 const slice = createSlice({
     name: 'auth',
-    initialState: {
-        isLoggedIn: false,
-    },
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -90,6 +92,7 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>('auth/log
 })
 
 // types
+export type AuthInitialState = typeof initialState
 
 export const authReducer = slice.reducer
 export const authThunks = { login, logout, initializeApp }
