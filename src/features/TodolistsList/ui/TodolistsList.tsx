@@ -4,11 +4,11 @@ import { AppRootState } from 'app/store'
 import { TodolistDomainType, todolistsThunks } from 'features/TodolistsList/model/todolists/todolistsSlice'
 import { TasksStateType } from 'features/TodolistsList/model/tasks/tasksSlice'
 import { Grid, Paper } from '@mui/material'
-import { Todolist } from 'features/TodolistsList/ui/Todolist/Todolist'
 import { Navigate } from 'react-router-dom'
 import { isLoggedInSelector, tasksSelector, todolistsSelector } from 'features/TodolistsList/lib/todolistslist-selector'
 import { AddItemForm } from 'common/components'
 import { useActions } from 'common/hooks/ useActions'
+import { TodoList } from './Todolist/Todolist'
 
 type Props = {
     demo?: boolean
@@ -50,7 +50,7 @@ export const TodolistsList: React.FC<Props> = ({ demo = false }) => {
                     return (
                         <Grid item key={tl.id}>
                             <Paper style={{ padding: '10px' }}>
-                                <Todolist todolist={tl} tasks={allTodolistTasks} demo={demo} />
+                                <TodoList todolist={tl} tasks={allTodolistTasks} demo={demo} />
                             </Paper>
                         </Grid>
                     )
