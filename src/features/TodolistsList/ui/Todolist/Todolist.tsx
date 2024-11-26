@@ -10,12 +10,12 @@ import Tasks from 'features/TodolistsList/ui/Todolist/Tasks/Tasks'
 import TodolistTitle from 'features/TodolistsList/ui/Todolist/TodolistTitle/TodolistTitle'
 
 type Props = {
-    todolist: TodolistDomainType
-    tasks: Array<TaskType>
-    demo?: boolean
+    todolist: TodolistDomainType,
+    tasks: TaskType[],
+    demo: boolean
 }
 
-export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: Props) {
+export const TodoList = ({ demo = false, todolist, tasks}: Props) => {
     const dispatch = useAppDispatch()
     const { addTask } = useActions(tasksThunks)
 
@@ -23,12 +23,12 @@ export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: 
         if (demo) {
             return
         }
-        dispatch(tasksThunks.fetchTasks(todolist.id))
+        dispatch(tasksThunks.fetchTasks(todolist?.id ?? ''))
     }, [])
 
     const addTaskCallback = useCallback(
         (title: string) => {
-            return addTask({ title, todolistId: todolist.id }).unwrap()
+            return addTask({ title, todolistId: todolist?.id ?? '' }).unwrap()
         },
         [todolist.id],
     )
@@ -37,7 +37,7 @@ export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: 
         <div>
             <TodolistTitle todolist={todolist} />
 
-            <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === 'loading'} />
+            <AddItemForm addItem={addTaskCallback} disabled={todolist?.entityStatus === 'loading'} />
 
             <Tasks todolist={todolist} tasks={tasks} />
 
@@ -53,4 +53,4 @@ export const Todolist = React.memo(function ({ demo = false, todolist, tasks }: 
             </div>
         </div>
     )
-})
+}
